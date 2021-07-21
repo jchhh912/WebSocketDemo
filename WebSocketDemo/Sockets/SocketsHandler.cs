@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
@@ -69,7 +69,7 @@ namespace WebSocketDemo
         }
 
         /// <summary>
-        /// 接收到消息
+        /// 正常大小数据
         /// </summary>
         /// <param name="socket"></param>
         /// <param name="result"></param>
@@ -77,5 +77,13 @@ namespace WebSocketDemo
         /// <returns></returns>
         public abstract Task Receive(WebSocket socket, WebSocketReceiveResult result,
             byte[] buffer);
+        /// <summary>
+        /// 大数据接收
+        /// </summary>
+        /// <param name="socket"></param>
+        /// <param name="result"></param>
+        /// <param name="buffer"></param>
+        /// <returns></returns>
+        public abstract Task Receive(WebSocket socket, string result);
     }
 }
