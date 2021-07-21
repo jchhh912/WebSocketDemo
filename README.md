@@ -40,4 +40,5 @@ Main Function.
 	 - Logging out of a room
    
 	 - Sending a file ---> not implemented
-   
+   ![image](https://user-images.githubusercontent.com/54928439/126463888-89d7742f-473e-4726-9cb4-1a06a6326214.png)
+
