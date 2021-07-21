@@ -10,7 +10,7 @@
      
 	 - 进入房间
      
-	 - 广播信息
+	 - 广播信息（自动扩容缓存池，对缓存池限制）
    
 	 - 私发信息
    
@@ -31,7 +31,7 @@ Main Function.
 
      - Access to the room
      
-	 - Broadcast messages
+	 - Broadcast messages(Automatic expansion of the cache pool and limits on the cache pool)
    
 	 - Sending private messages
    
