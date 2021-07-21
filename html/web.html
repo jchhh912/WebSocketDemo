@@ -39,45 +39,6 @@
     </div>-->
 
     <script>
-        // 根据实际地址和端口进行修改，其他内容无需修改
-        //const uri = "ws://localhost:5000/ws";
-        //socket = new WebSocket(uri);
-        //socket.onopen = function (e) {
-        //    console.log("websocket estabished!");
-        //}
-
-        //socket.onclose = function (e) {
-        //    console.log('websocket closed!');
-        //}
-
-        //socket.onmessage = function (e) {
-        //    appendItem(list, e.data);
-        //    console.log(e.data);
-        //}
-
-        //const list = document.getElementById("messageList");
-        //const btn = document.getElementById("sendBtn");
-        //const getIdbtn = document.getElementById("GetIdBtn");
-        //btn.addEventListener("click", function () {
-        //    console.log("sending message~~~");
-
-        //    var messgae = document.getElementById("message");
-        //    socket.send(message.value)
-        //})
-        // getIdbtn.addEventListener("click", function () {
-        //    console.log("Get All ID~~~");
-        //     var messgae = document.getElementById("message");
-        //     socket.send(message.value)
-        //})
-
-        //function appendItem(list, message) {
-        //    const li = document.createElement("li");
-        //    li.appendChild(document.createTextNode(message));
-        //    list.appendChild(li);
-        //}
-
-        //-------------------------------------------------------------------------
-
         var room = document.getElementById("txtRoomNo").value;
         const uri = "ws://localhost:" + room + "/ws";
         var WEB_SOCKET = null;
