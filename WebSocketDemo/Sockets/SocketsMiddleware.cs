@@ -29,9 +29,9 @@ namespace WebSocketDemo
                 var socket = await context.WebSockets.AcceptWebSocketAsync();
                 await _Handler.OnConnected(socket);
                 //接收消息 缓存区 需要合理设置,太小websocket接收缓存不足时，会自行断开后，过大会造成浪费大量内存
-                var buffer = new byte[1024 * 1];
+                var buffer = new byte[1024 * 4];
                 var offset = 0;
-                var free = buffer.Length;         
+                var free = buffer.Length;
                 StringBuilder msgString = new StringBuilder();
                 //监听数据 
                 while (socket.State == WebSocketState.Open)
@@ -39,21 +39,20 @@ namespace WebSocketDemo
                     //再次发送消息的时候 会将上一次的消息一起发过来
                     WebSocketReceiveResult result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
                     free -= result.Count;
-                   
+
                     //当缓存池不足时,接收大文件
                     if (free <= 0)
                     {
-                        
-                        offset += result.Count;
                         // Resize the outgoing buffer  每次增加1024
-                        var newSize = buffer.Length + 1024 * 1;
-                        //设置缓存池最大限制  不超过8k-2.5mb 之间  计算方法https://stackoverflow.com/questions/2811006/what-is-a-good-buffer-size-for-socket-programming
-                        if (newSize > 262144)
+                        int newSize = buffer.Length + 1024 * 1;
+                        //设置缓存池最大限制  8k-2.5mb 之间  计算方法https://stackoverflow.com/questions/2811006/what-is-a-good-buffer-size-for-socket-programming
+                        if (newSize > 15000&&result.EndOfMessage)
                         {
                             //避免浪费 用户自己检查问题
-                            await _Handler.SendMessage(socket,"数据传输失败！请检查网络");
-                            break;
+                            await _Handler.SendMessage(socket, "数据传输失败！请检查网络");
+                            continue;
                         }
+                        offset += result.Count;
                         //获取新缓存池
                         var newBuffer = new byte[newSize];
                         Array.Copy(buffer, 0, newBuffer, 0, buffer.Length);
@@ -67,10 +66,12 @@ namespace WebSocketDemo
                             await _Handler.Receive(socket, msgString.ToString());
                             //释放
                             msgString.Clear();
+                            buffer = new byte[1024 * 4];
                         };
                     }
                     //当缓存池接收没问题时不用增加
-                    if (result.EndOfMessage&&free>0) {
+                    if (result.EndOfMessage && free > 0)
+                    {
                         switch (result.MessageType)
                         {
                             case WebSocketMessageType.Text:
@@ -85,7 +86,7 @@ namespace WebSocketDemo
                                 throw new AbandonedMutexException();
                         }
                     };
-                }    
+                }
             }
         }
     }
