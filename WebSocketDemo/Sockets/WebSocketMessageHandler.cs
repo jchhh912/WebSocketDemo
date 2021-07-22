@@ -3,8 +3,6 @@
 using Newtonsoft.Json;
 using System.Net.WebSockets;
 using System.Text;
-using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
 using WebSocketDemo.Sockets;
 
@@ -37,7 +35,7 @@ namespace WebSocketDemo
         {
 
             var msgString = Encoding.UTF8.GetString(buffer, 0, result.Count);
-            var msg = JsonConvert.DeserializeObject<Message>(msgString);
+            Message msg = JsonConvert.DeserializeObject<Message>(msgString);
             msg.FromID = Sockets.GetId(socket);
             switch (msg.Action)
             {
