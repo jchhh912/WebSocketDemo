@@ -31,14 +31,8 @@
         </div>
     </div>
     <br />
-    <!--<div  style="width:40%">
-        <input type="text" placeholder="enter your message" id="message">
-        <button id="sendBtn">Send</button>
-        <button id="GetIdBtn">GetId</button>
-        <ul id="messageList"></ul>
-    </div>-->
-
     <script>
+        // 根据实际地址和端口进行修改，其他内容无需修改
         var room = document.getElementById("txtRoomNo").value;
         const uri = "ws://localhost:" + room + "/ws";
         var WEB_SOCKET = null;
