@@ -50,6 +50,10 @@ namespace WebSocketDemo
                         {
                             //避免浪费 用户自己检查问题
                             await _Handler.SendMessage(socket, "数据传输失败！请检查网络");
+                            msgString.Clear();
+                            //重置
+                            buffer = new byte[1024 * 4];
+                            free = buffer.Length;
                             continue;
                         }
                         //offset += result.Count;
