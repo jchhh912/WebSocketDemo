@@ -38,11 +38,11 @@ namespace WebSocketDemo
                 //监听数据 
                 while (socket.State == WebSocketState.Open)
                 {
-                    //再次发送消息的时候 会将上一次的消息一起发过来
+                    //监听消息
                     WebSocketReceiveResult result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
                     //初始化 
                     free -= result.Count;
-                    //当缓存池接收没问题时不用增加
+                    //当缓存池接收没问题时 直接发送消息
                     if (result.EndOfMessage && free > 0)
                     {
                         switch (result.MessageType)
@@ -60,7 +60,7 @@ namespace WebSocketDemo
                                 throw new AbandonedMutexException();
                         }
                     };
-                    //当缓存池不足时,接收大文件
+                    //当缓存池不足时,对缓存池进行扩容
                     if (free <= 0)
                     {
                         // Resize the outgoing buffer  每次增加1024
